@@ -63,6 +63,7 @@ app.cameraApp.prototype={
         });
         app.id("compassImage").style.display = "none";
         app.id("accelerometer").style.display = "none";
+        app.id("smallImage").style.display = 'none';
     },
     
     _capturePhoto: function() {
@@ -347,6 +348,8 @@ app.cameraApp.prototype={
     _clearLog: function() {
         var that = this;
 
+        app.id("smallImage").style.display = 'none';
+        
         that.resultsField.innerHTML = '';
     },
     

@@ -18,9 +18,8 @@
     "2"
   ],
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
-  "FrameworkVersion": "4.0.0",
+  "FrameworkVersion": "5.2.0",
   "CorePlugins": [
-    "com.phonegap.plugins.barcodescanner@6.0.3",
     "cordova-plugin-battery-status",
     "cordova-plugin-camera",
     "cordova-plugin-console",
@@ -40,6 +39,7 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-vibration",
     "cordova-plugin-whitelist",
+    "com.phonegap.plugins.barcodescanner@6.0.3",
     "nl.x-services.plugins.flashlight@3.1.0"
   ],
   "AndroidPermissions": [
