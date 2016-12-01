@@ -269,7 +269,6 @@ app.cameraApp.prototype={
         that._stopCompass();
         button = app.id("startButton");
 		if (that.watchID2 === null) {
-            app.id("accelerometer").style.display = "";
 			// Update acceleration every .5 second
 			var options = { frequency: 500 };
 
@@ -316,6 +315,7 @@ app.cameraApp.prototype={
 	_onAccelerometerSuccess: function(acceleration) {
 		var that = this;
         that._clearLog();
+        app.id("accelerometer").style.display = "";
 		that.spanX.textContent = acceleration.x;
 		that.spanY.textContent = acceleration.y;
 		that.spanZ.textContent = acceleration.z;              

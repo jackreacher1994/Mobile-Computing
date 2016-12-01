@@ -2,15 +2,15 @@
   "ProjectName": "sample-kendoui-core-widgets",
   "ProjectGuid": "3960f3dd-611c-4476-b461-8ace958f4be7",
   "projectVersion": 1,
-  "AppIdentifier": "com.telerik.samplekendouicorewidgets",
-  "DisplayName": "Kendo-ui-core-widgets",
-  "Author": "",
+  "AppIdentifier": "com.quannh.mobilecomputing",
+  "DisplayName": "BTL TTDĐ",
+  "Author": "Nguyen Hong Quan",
   "WP8Publisher": "",
   "WP8TileTitle": "",
   "WP8Capabilities": [],
   "iOSBackgroundMode": [],
   "WP8Requirements": [],
-  "Description": "Kendo-ui-core-widgets",
+  "Description": "BTL mon Tinh toan di dong",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
@@ -63,8 +63,7 @@
     "android.permission.WRITE_EXTERNAL_STORAGE"
   ],
   "DeviceOrientations": [
-    "Portrait",
-    "Landscape"
+    "Portrait"
   ],
   "AndroidHardwareAcceleration": "true",
   "iOSStatusBarStyle": "Default",
@@ -78,5 +77,6 @@
   "WP8ProductID": "{5f530eee-1a01-4c8c-a4a8-88e100821ec3}",
   "WP8PackageIdentityName": "1234Telerik.com.telerik.samplekendouicorewidgets",
   "WP8WindowsPublisherName": "CN=Telerik",
-  "WPSdk": "8.1"
+  "WPSdk": "8.1",
+  "CordovaPluginVariables": {}
 }
