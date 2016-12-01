@@ -1,0 +1,27 @@
+/*specific*/
+#compass
+{
+	-webkit-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+}
+
+.mapCompassFrame
+{
+	width: 100px;
+	height: 100px;
+	background-image: url("img/compassFrame.png");
+	margin: 0 auto;
+}
+
+.mapCompass
+{
+	width: 100px;
+	height: 100px;
+	background-image: url("img/compass.png");
+}
+    
+.content > .results  > #result {
+    font-size:16px;
+    color:#639ecd;
+    word-wrap:break-word;
+}

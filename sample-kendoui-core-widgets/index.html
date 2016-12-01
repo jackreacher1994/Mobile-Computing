@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
     <link href="styles/main.css" rel="stylesheet" />
-    <link href="styles/logoimages.css" rel="stylesheet" />
+    <link href="styles/app.css" rel="stylesheet">
+    <link href="styles/compass.css" rel="stylesheet">
 
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
@@ -13,66 +14,112 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 
     <script src="scripts/app.js"></script>
-    <script src="scripts/login.js"></script>
+    <script src="scripts/translator.js"></script>
     <script src="scripts/location.js"></script>
-    <script src="scripts/weather.js"></script>
 </head>
 <body>
     <!--Home View-->
     <div id="tabstrip-home"
         data-role="view"
-        data-title="Home">
-        <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-                <a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Flat</a>
-            </div>
-        </header>
+        data-title="Chung">
 
-        <h3>Welcome!</h3>
-        <p>
-            Telerik AppBuilder&trade; enables you to build cross-platform device applications regardless of your
-            development platform by combining the convenience of a local development toolset with the
-            power and flexibility of the cloud.
-        </p>
-        <div class="welcome-image"></div>
+        <div class="subheader">
+			<div class="row">
+				<div class="col -stretch-item">
+					<button class="button" id="capturePhotoButton">Chụp ảnh</button>
+				</div>
+                <div class="col">
+					<button class="button" id="scanQRCode">Quét mã QR</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<button class="button" id="getPhotoFromLibraryButton">Chọn ảnh</button>
+				</div>
+                <div class="col">
+					<button class="button" id="toggleFLButton">Bật đèn Flash</button>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col">
+					<button class="button" id="deviceName">Tên thiết bị</button>
+				</div>
+                <div class="col">
+					<button class="button" id="devicePlatform">Hệ điều hành</button>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col">
+					<button class="button" id="deviceUUID">UUID của thiết bị</button>
+				</div>
+                <div class="col">
+					<button class="button" id="oSVersion">Phiên bản điều hành</button>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col">
+					<button class="button" id="watchButton">Bật la bàn</button>
+				</div>
+                <div class="col">
+					<button class="button" id="oSVersion">Cảm biến gia tốc</button>
+				</div>
+			</div>
+		</div>
+        <div>
+            <div class="row">
+				<div class="col">
+					<div class="mapCompassFrame">
+						<div id="compass" class="mapCompass"></div>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div id="result"></div>
+        <div class="content">
+			<div class="row -nopadding">
+				<div class="col -align-center">
+					<img style="display:none;margin:5px auto; max-width:80%; max-height:80%;" id="smallImage" src="" />
+				</div>
+			</div>
+        </div>
+        
     </div>
 
     <!--Login View-->
     <div id="tabstrip-login"
         data-role="view"
-        data-title="Login"
+        data-title="Dịch thuật"
         data-model="app.loginService.viewModel">
 
-        <div class="logo-image"></div>
-        <div>
-            <h3 data-bind="visible: isLoggedIn">Welcome, <span data-bind="    text: username"></span>!</h3>
-            <input id="logout" type="submit" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" value="Logout" class="login-button" />
-        </div>
-        <form data-bind="events: { keyup: checkEnter }">
-            <h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
-            <ul data-role="listview" data-style="inset" data-bind="invisible: isLoggedIn">
-                <li>
-                    <label>
-                        <div>Username</div>
-                        <input type="text" data-bind="value: username" />
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <div>Password</div>
-                        <input type="password" data-bind="value: password" />
-                    </label>
-                </li>
-            </ul>
-            <input id="login" type="submit" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" value="Login" class="login-button" />
-        </form>
+        <form  id="translateForm">
+                <label for="sourceLanguage">Từ:</label>
+                <select id="sourceLanguage" name="sourceLanguage">
+                    <option selected="selected" value="en-GB">English</option>
+                </select>
+                <label for="destLanguage">Đến:</label>
+                <select id="destLanguage" name="destLanguage">
+                    <option selected="selected" value="ja-JA">Japanese</option>
+                </select>
+                <br>
+                <label for="translateText">
+                    <div>Cần dịch:</div>
+                    <input type="search" name="translateText" id="translateText" data-mini="true"     />
+                </label>
+                <br>
+                <label for="translatedText">
+                    <div>Đã dịch:</div>
+                    <input type="text" name="translatedText" id="translatedText" disabled />
+                </label>
+                <br>
+                <input type="submit" id="translateButton" style="width:80%" data-role="button" value="Dịch" />
+            </form>
+
     </div>
 
     <!--Location View-->
     <div id="tabstrip-location"
         data-role="view"
-        data-title="Location"
+        data-title="Địa điểm"
         data-init="app.locationService.initLocation"
         data-show="app.locationService.show"
         data-hide="app.locationService.hide"
@@ -82,7 +129,7 @@
         <div id="map-canvas" class="map" data-bind="visible: isGoogleMapsInitialized"></div>
 
         <div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
-            <h3>Location requires internet connection to display the map.</h3>
+            <h3>Yêu cầu kết nối Internet để hiển thị bản đồ.</h3>
         </div>
         <div id="map-search-wrap" class="map-tools" data-bind="visible: isGoogleMapsInitialized, invisible: hideSearch">
             <div>
@@ -92,30 +139,6 @@
             </div>
         </div>
     </div>
-
-    <!--Weather View-->
-    <div id="tabstrip-weather"
-        data-role="view"
-        data-title="Weather"
-        data-model="app.weatherService.viewModel">
-
-        <ul data-role="listview" data-style="inset"
-            data-bind="source: weatherDataSource"
-            data-template="weather-forecast-template">
-        </ul>
-    </div>
-
-    <!--Weather forecast template-->
-    <script id="weather-forecast-template" type="text/x-kendo-tmpl">
-        <div class="w-item-template">
-            <span class="w-icon ${image}"></span>
-            <h4 class="w-date">${day}</h4>
-            <div class="w-temp">
-                <span>${highTemperature}<sup>&deg;</sup></span>
-                <span>${lowTemperature}<sup>&deg;</sup></span>
-            </div>
-        </div>
-    </script>
 
     <!--Layout-->
     <div data-role="layout" data-id="tabstrip-layout">
@@ -129,10 +152,9 @@
         <!--Footer-->
         <div data-role="footer">
             <div data-role="tabstrip">
-                <a href="#/" data-icon="home">Home</a>
-                <a href="#tabstrip-login" data-icon="contacts">Login</a>
-                <a href="#tabstrip-location" data-icon="search">Location</a>
-                <a href="#tabstrip-weather" data-icon="globe">Weather</a>
+                <a href="#/" data-icon="home">Chung</a>
+                <a href="#tabstrip-login" data-icon="contacts">Dịch thuật</a>
+                <a href="#tabstrip-location" data-icon="search">Địa điểm</a>
             </div>
         </div>
     </div>
