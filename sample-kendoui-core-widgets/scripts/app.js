@@ -190,8 +190,8 @@ app.cameraApp.prototype={
 		magneticHeading = heading.magneticHeading,
 		timestamp = heading.timestamp;
         
-		var informationMessage = 'Magnetic field: ' + magneticHeading + '<br />' +
-								 'Timestamp: ' + timestamp + '<br />' 
+		var informationMessage = 'Từ trường: ' + magneticHeading + '<br />' +
+								 'Thời gian: ' + timestamp + '<br />' 
         
         that._clearLog();
 		that._addMessageToLog(informationMessage);
