@@ -42,10 +42,13 @@ app.cameraApp.prototype={
         app.id("deviceUUID").addEventListener("click", function(){
             that._viewDeviceUUID.apply(that,arguments)
         });
+        app.id("osVersion").addEventListener("click", function(){
+            that._viewDeviceOSVersion.apply(that,arguments)
+        });
         app.id("watchButton").addEventListener("click", function(){
             that._handleWatch.apply(that,arguments)
         });
-        
+        app.id("compassImage").style.display = "none";
     },
     
     _capturePhoto: function() {
@@ -145,7 +148,7 @@ app.cameraApp.prototype={
 	    that._addMessageToLog(device.uuid);
 	},
     
-	_viewOSVersion:function viewOSVersion() {
+	_viewDeviceOSVersion: function () {
         var that= this;
         that._clearLog();
         that._stopCompass();
@@ -161,8 +164,11 @@ app.cameraApp.prototype={
 			navigator.compass.clearWatch(that.watchID);
 			that.watchID = null;
 			button.innerHTML = "Bật la bàn";
+            app.id("compassImage").style.display = "none";
 		}
 		else {
+            app.id("compassImage").style.display = "";
+
 			var options = { frequency: 1000 };
 
 			that._addMessageToLog("Đang lấy dữ liệu từ la bàn...");
@@ -221,13 +227,14 @@ app.cameraApp.prototype={
 		that._addMessageToLog(errorMessage);
 	},
 
-    _onStopCompass: function() {
+    _stopCompass: function() {
         var that = this,
         button = app.id("watchButton");
         if (that.watchID !== null) {
 			navigator.compass.clearWatch(that.watchID);
 			that.watchID = null;
 			button.innerHTML = "Bật la bàn";
+            app.id("compassImage").style.display = "none";
 		}
     },
 
