@@ -1,3 +1,5 @@
+
+
 DOCTYPE html>
 <html>
 <head>
@@ -61,7 +63,7 @@ DOCTYPE html>
 					<button class="button" id="watchButton">Bật la bàn</button>
 				</div>
                 <div class="col">
-					<button class="button" id="">Cảm biến gia tốc</button>
+					<button class="button" id="startButton">Bật cảm biến gia tốc</button>
 				</div>
 			</div>
 		</div>
@@ -74,7 +76,44 @@ DOCTYPE html>
 				</div>
 			</div>
         </div>
+
+        <div class="content" id="accelerometer">
+		<div class="row">
+			<div class="col -text-right">
+				<span class="u-text-bold">X:</span>
+			</div>
+			<div class="col -text-left">
+				<span class="-ellipsis u-color-accent" id="spanDirectionX"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col -text-right">
+				<span class="u-text-bold">Y:</span>
+			</div>
+			<div class="col -text-left">
+				<span class="-ellipsis u-color-accent" id="spanDirectionY"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col -text-right">
+				<span class="u-text-bold">Z:</span>
+			</div>
+			<div class="col -text-left">
+				<span class="-ellipsis u-color-accent" id="spanDirectionZ"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col -text-right">
+				<span class="u-text-bold">Thời gian:</span>
+			</div>
+			<div class="col -text-left">
+				<span class="-ellipsis u-color-accent" id="spanTimeStamp"></span>
+			</div>
+		</div>
+	</div>
+
         <div id="result"></div>
+
         <div class="content">
 			<div class="row -nopadding">
 				<div class="col -align-center">

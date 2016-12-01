@@ -15,12 +15,22 @@ app.cameraApp.prototype={
     resultsField: null,
 
     watchID : null,
+
+    watchID2 : null,
+    spanX : null,
+	spanY: null,
+	spanZ: null,
+	spanTimeStamp: null,
     
     run: function(){
         var that=this;
 	    that._pictureSource = navigator.camera.PictureSourceType;
 	    that._destinationType = navigator.camera.DestinationType;
         that.resultsField = app.id("result");
+        that.spanX = app.id("spanDirectionX");
+		that.spanY = app.id("spanDirectionY");
+		that.spanZ = app.id("spanDirectionZ");
+		that.spanTimeStamp = app.id("spanTimeStamp");
 	    app.id("capturePhotoButton").addEventListener("click", function(){
             that._capturePhoto.apply(that,arguments);
         });
@@ -48,13 +58,18 @@ app.cameraApp.prototype={
         app.id("watchButton").addEventListener("click", function(){
             that._handleWatch.apply(that,arguments)
         });
+        app.id("startButton").addEventListener("click", function(){
+            that._startWatch.apply(that,arguments)
+        });
         app.id("compassImage").style.display = "none";
+        app.id("accelerometer").style.display = "none";
     },
     
     _capturePhoto: function() {
         var that = this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
         // Take picture using device camera and retrieve image as base64-encoded string.
         navigator.camera.getPicture(function(){
             that._onPhotoDataSuccess.apply(that,arguments);
@@ -70,6 +85,7 @@ app.cameraApp.prototype={
         var that= this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
         // On Android devices, pictureSource.PHOTOLIBRARY and
         // pictureSource.SAVEDPHOTOALBUM display the same photo album.
         that._getPhoto(that._pictureSource.PHOTOLIBRARY);         
@@ -93,6 +109,7 @@ app.cameraApp.prototype={
         var that= this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
         cordova.plugins.barcodeScanner.scan(
                 function(result) {
                     if (!result.cancelled) {
@@ -109,6 +126,7 @@ app.cameraApp.prototype={
         var that= this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
         window.plugins.flashlight.available(function (isAvailable) {
             if (isAvailable) {
                 // toggle on/off
@@ -131,6 +149,7 @@ app.cameraApp.prototype={
         var that= this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
 	    that._addMessageToLog(device.model);
 	},
     
@@ -138,6 +157,7 @@ app.cameraApp.prototype={
         var that= this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
 	    that._addMessageToLog(device.platform);
 	},
     
@@ -145,6 +165,7 @@ app.cameraApp.prototype={
         var that= this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
 	    that._addMessageToLog(device.uuid);
 	},
     
@@ -152,12 +173,14 @@ app.cameraApp.prototype={
         var that= this;
         that._clearLog();
         that._stopCompass();
+        that._stopAccelerometer();
 		that._addMessageToLog(device.version);
 	},
 
     _handleWatch: function() {
 		var that = this;
         that._clearLog();
+        that._stopAccelerometer();
 		button = app.id("watchButton");
 
 		if (that.watchID !== null) {
@@ -237,6 +260,73 @@ app.cameraApp.prototype={
             app.id("compassImage").style.display = "none";
 		}
     },
+
+    // Start watching the acceleration
+	_startWatch: function() {
+		// Only start testing if watchID is currently null.
+		var that = this;
+        that._clearLog();
+        that._stopCompass();
+        button = app.id("startButton");
+		if (that.watchID2 === null) {
+            app.id("accelerometer").style.display = "";
+			// Update acceleration every .5 second
+			var options = { frequency: 500 };
+
+            that._addMessageToLog("Đang lấy dữ liệu từ cảm biến gia tốc...");
+            button.innerHTML = "Tắt cảm biến gia tốc";
+
+			that.watchID2 = navigator.accelerometer.watchAcceleration(function() { 
+				that._onAccelerometerSuccess.apply(that, arguments)
+			}, 
+            function(error) { 
+             that._onAccelerometerError.apply(that, arguments)
+            }, 
+            options);
+		} else {
+            var emptyText = "";
+			navigator.accelerometer.clearWatch(that.watchID2);
+			that.watchID2 = null;
+			that.spanX.textContent = emptyText;
+			that.spanY.textContent = emptyText;
+			that.spanZ.textContent = emptyText;
+			that.spanTimeStamp.textContent = emptyText;
+            button.innerHTML = "Bật cảm biến gia tốc";
+            app.id("accelerometer").style.display = "none";
+        }
+	},
+
+    _stopAccelerometer: function() {
+        var that = this,
+        button = app.id("startButton");
+        if (that.watchID2 !== null) {
+			var emptyText = "";
+			navigator.accelerometer.clearWatch(that.watchID2);
+			that.watchID2 = null;
+			that.spanX.textContent = emptyText;
+			that.spanY.textContent = emptyText;
+			that.spanZ.textContent = emptyText;
+			that.spanTimeStamp.textContent = emptyText;
+            button.innerHTML = "Bật cảm biến gia tốc";
+            app.id("accelerometer").style.display = "none";
+		}
+    },
+ 
+	//Get a snapshot of the current acceleration
+	_onAccelerometerSuccess: function(acceleration) {
+		var that = this;
+        that._clearLog();
+		that.spanX.textContent = acceleration.x;
+		that.spanY.textContent = acceleration.y;
+		that.spanZ.textContent = acceleration.z;              
+		that.spanTimeStamp.textContent = acceleration.timestamp;
+	},
+    
+	//Failed to get the acceleration
+	_onAccelerometerError: function(error) {
+        that._clearLog();
+		alert("Không thể bật cảm biến gia tốc! Mã lỗi: " + error.code );
+	},
 
     _onSuccess: function() {
         
